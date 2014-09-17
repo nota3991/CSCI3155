@@ -1,4 +1,4 @@
 CSCI3155
 ========
 
-CSCI 3155 - Principles of Programming Languages
+CSCI 3155 - Principles of Programming Languages Lab Assignments
