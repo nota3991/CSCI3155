@@ -53,7 +53,7 @@ object Lab2 extends jsy.util.JsyApplication {
     require(isValue(v))
     (v: @unchecked) match {
       case N(n) => {
-        return n.toDouble;
+        return n;
       }
       case B(b) => {
         if (b) {
