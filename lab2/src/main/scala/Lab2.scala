@@ -57,9 +57,9 @@ object Lab2 extends jsy.util.JsyApplication {
       }
       case B(b) => {
         if (b) {
-          return 1;
+          return 1.0;
         } else {
-          return 0;
+          return 0.0;
         }
       }
       case S(s) => {
@@ -78,10 +78,17 @@ object Lab2 extends jsy.util.JsyApplication {
         return b;
       }
       case N(n) => {
-        if (n == 0) {
+        if (n.isNaN() || n == 0) {
           return false;
         }
         return true;
+      }
+      case S(s) => {
+        if (s.equals("")) {
+          return false
+        } else {
+          return true;
+        }
       }
       case Undefined => {
         return false;
