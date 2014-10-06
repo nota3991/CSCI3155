@@ -113,7 +113,7 @@ object Lab2 extends jsy.util.JsyApplication {
         return e;
       }
       case ConstDecl(x, e1, e2) => {
-        return eval(extend(env, x, eval(env, e1)), e2);
+        return eval(extend(env, x, eToVal(e1)), e2);
       }
       case Var(x) => {
         return get(env, x);
@@ -139,48 +139,48 @@ object Lab2 extends jsy.util.JsyApplication {
         }
       }
       case Binary(Plus, e1, e2) => {
-        return N(toNumber(eval(env, e1)) + toNumber(eval(env, e2)));
+        return N(toNumber(eToVal(e1)) + toNumber(eToVal(e2)));
       }
       case Binary(Minus, e1, e2) => {
-        return N(toNumber(eval(env, e1)) - toNumber(eval(env, e2)));
+        return N(toNumber(eToVal(e1)) - toNumber(eToVal(e2)));
       }
       case Binary(Times, e1, e2) => {
-        return N(toNumber(eval(env, e1)) * toNumber(eval(env, e2)));
+        return N(toNumber(eToVal(e1)) * toNumber(eToVal(e2)));
       }
       case Binary(Div, e1, e2) => {
-        return N(toNumber(eval(env, e1)) / toNumber(eval(env, e2)));
+        return N(toNumber(eToVal(e1)) / toNumber(eToVal(e2)));
       }
       case Binary(Eq, e1, e2) => {
-        return B(toNumber(eval(env, e1)) == toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) == toNumber(eToVal(e2)));
       }
       case Binary(Ne, e1, e2) => {
-        return B(toNumber(eval(env, e1)) != toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) != toNumber(eToVal(e2)));
       }
       case Binary(Lt, e1, e2) => {
-        return B(toNumber(eval(env, e1)) < toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) < toNumber(eToVal(e2)));
       }
       case Binary(Le, e1, e2) => {
-        return B(toNumber(eval(env, e1)) <= toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) <= toNumber(eToVal(e2)));
       }
       case Binary(Gt, e1, e2) => {
-        return B(toNumber(eval(env, e1)) > toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) > toNumber(eToVal(e2)));
       }
       case Binary(Ge, e1, e2) => {
-        return B(toNumber(eval(env, e1)) >= toNumber(eval(env, e2)));
+        return B(toNumber(eToVal(e1)) >= toNumber(eToVal(e2)));
       }
       case Binary(And, e1, e2) => {
-        return B(toBoolean(eval(env, e1)) && toBoolean(eval(env, e2)));
+        return B(toBoolean(eToVal(e1)) && toBoolean(eToVal(e2)));
       }
       case Binary(Or, e1, e2) => {
-        return B(toBoolean(eval(env, e1)) || toBoolean(eval(env, e2)));
+        return B(toBoolean(eToVal(e1)) || toBoolean(eToVal(e2)));
       }
       case Binary(Seq, e1, e2) => {
-        return eval(env, e1); eval(env, e2);
+        return eToVal(e1); eToVal(e2);
       }
       /* Inductive Cases */
       case Print(e1) => println(pretty(eToVal(e1))); Undefined
       case If(e1, e2, e3) => {
-        if (toBoolean(eval(env, e1)) == true) {
+        if (toBoolean(eToVal(e1)) == true) {
           return e2;
         } else {
           return e3;
