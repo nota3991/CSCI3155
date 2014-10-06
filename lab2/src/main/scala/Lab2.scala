@@ -55,12 +55,16 @@ object Lab2 extends jsy.util.JsyApplication {
       case N(n) => {
         return n.toDouble;
       }
-      /*case B(true) => {
-        return 1.0;
+      case B(b) => {
+        if (b) {
+          return 1;
+        } else {
+          return 0;
+        }
       }
-      case B(false) => {
-        return 0.0;
-      }*/
+      case S(s) => {
+        return s.toDouble;
+      }
       case Undefined => {
         return Double.NaN;
       }
