@@ -182,10 +182,20 @@ object Lab2 extends jsy.util.JsyApplication {
         return B(toNumber(eToVal(e1)) >= toNumber(eToVal(e2)));
       }
       case Binary(And, e1, e2) => {
-        return B(toBoolean(eToVal(e1)) && toBoolean(eToVal(e2)));
+        if (!toBoolean(eToVal(e1))) {
+          // don't bother evaluating e2
+          return eToVal(e1); // this is false being returned
+        }
+        return eToVal(e2);
+        //return B(toBoolean(eToVal(e1)) && toBoolean(eToVal(e2)));
       }
       case Binary(Or, e1, e2) => {
-        return B(toBoolean(eToVal(e1)) || toBoolean(eToVal(e2)));
+        if (toBoolean(eToVal(e1))) {
+          // don't bother evaluating e2
+          return eToVal(e1); // this is true being returned
+        }
+        return eToVal(e2);
+        //return B(toBoolean(eToVal(e1)) || toBoolean(eToVal(e2)));
       }
       case Binary(Seq, e1, e2) => {
         return eToVal(e1); eToVal(e2);
