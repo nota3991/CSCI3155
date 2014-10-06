@@ -198,7 +198,8 @@ object Lab2 extends jsy.util.JsyApplication {
         //return B(toBoolean(eToVal(e1)) || toBoolean(eToVal(e2)));
       }
       case Binary(Seq, e1, e2) => {
-        return eToVal(e1); eToVal(e2);
+        eToVal(e1);
+        eToVal(e2);
       }
       /* Inductive Cases */
       case Print(e1) => println(pretty(eToVal(e1))); Undefined
