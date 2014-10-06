@@ -63,7 +63,11 @@ object Lab2 extends jsy.util.JsyApplication {
         }
       }
       case S(s) => {
-        return s.toDouble;
+        try {
+          return s.toDouble;
+        } catch {
+          case _ : NumberFormatException => return Double.NaN;
+        }
       }
       case Undefined => {
         return Double.NaN;
@@ -129,28 +133,25 @@ object Lab2 extends jsy.util.JsyApplication {
       case Var(x) => {
         return get(env, x);
       }
-      case Unary(Neg, e1) => {
-        if (toBoolean(e1) == true) {
-          return N(-1);
-        } else if (toBoolean(e1) == false) {
-          return N(0);
-        } else {
-          return N(toNumber(e1) * -1);
-        }
-      }
-      case Unary(Not, e1) => {
-        if (toBoolean(e1) == true) {
-          return B(false);
-        } else if (toBoolean(e1) == false) {
-          return B(true);
-        } else if (toNumber(e1) == 0) {
-          return B(true);
-        } else {
-          return B(false);
+      case Unary(op, e1) => {
+        op match {
+          case Neg => {
+            return N(0 - toNumber(eToVal(e1)));
+          }
+          case Not => {
+            return B(!toBoolean(eToVal(e1)));
+          }
         }
       }
       case Binary(Plus, e1, e2) => {
-        return N(toNumber(eToVal(e1)) + toNumber(eToVal(e2)));
+        (e1, e2) match {
+          case (S(_),_)|(_,S(_)) => { // string concat
+            return S(toStr(eToVal(e1)) + toStr(eToVal(e2)));
+          }
+          case (_, _) => { // adding two numbers
+            return N(toNumber(eToVal(e1)) + toNumber(eToVal(e2)));
+          }
+        }
       }
       case Binary(Minus, e1, e2) => {
         return N(toNumber(eToVal(e1)) - toNumber(eToVal(e2)));
@@ -159,6 +160,7 @@ object Lab2 extends jsy.util.JsyApplication {
         return N(toNumber(eToVal(e1)) * toNumber(eToVal(e2)));
       }
       case Binary(Div, e1, e2) => {
+        require(toNumber(eToVal(e2)) != 0); // division by 0 = trouble
         return N(toNumber(eToVal(e1)) / toNumber(eToVal(e2)));
       }
       case Binary(Eq, e1, e2) => {
